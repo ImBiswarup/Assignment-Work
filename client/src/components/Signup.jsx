@@ -53,7 +53,7 @@ const Signup = () => {
                             />
                         </div>
                         <div className="mt-2 relative">
-                            <h2 className="text-black mb-1">Password</h2>
+                            <h2 className="text-black mb-1-">Password</h2>
                             <input
                                 id="password"
                                 name="password"
@@ -65,19 +65,21 @@ const Signup = () => {
                                 className="relative block w-full px-3 py-2 pr-10 border border-gray-300 placeholder-gray-500 rounded-md focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm"
                                 placeholder="Password"
                             />
-                            {showPassword ? (
-                                <FaEye
-                                    size={25}
-                                    className="absolute z-10 right-3 top-1/2 transform -translate-y-1/2 text-gray-700 cursor-pointer mt-3.5"
-                                    onClick={togglePasswordVisibility}
-                                />
-                            ) : (
-                                <FaEyeSlash
-                                    size={25}
-                                    className="absolute z-10 right-3 top-1/2 transform -translate-y-1/2 text-gray-700 cursor-pointer mt-3.5"
-                                    onClick={togglePasswordVisibility}
-                                />
-                            )}
+                            {
+                                showPassword ? (
+                                    <FaEye
+                                        size={25}
+                                        className="absolute z-10 right-3 top-1/2 transform -translate-y-1/2 text-gray-700 cursor-pointer mt-3.5"
+                                        onClick={togglePasswordVisibility}
+                                    />
+                                ) : (
+                                    <FaEyeSlash
+                                        size={25}
+                                        className="absolute z-10 right-3 top-1/2 transform -translate-y-1/2 text-gray-700 cursor-pointer mt-3.5"
+                                        onClick={togglePasswordVisibility}
+                                    />
+                                )
+                            }
                         </div>
                     </div>
 

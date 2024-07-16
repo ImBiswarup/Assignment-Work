@@ -13,7 +13,7 @@ const Login = () => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-  
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -50,14 +50,14 @@ const Login = () => {
                 placeholder="Password"
               />
               {
-                togglePasswordVisibility ? (
-                  <FaEyeSlash
+                showPassword ? (
+                  <FaEye
                     size={25}
                     className="absolute z-10 right-3 top-1/2 transform -translate-y-1/2 text-gray-700 cursor-pointer mt-3.5"
                     onClick={togglePasswordVisibility}
                   />
                 ) : (
-                  <FaEye
+                  <FaEyeSlash
                     size={25}
                     className="absolute z-10 right-3 top-1/2 transform -translate-y-1/2 text-gray-700 cursor-pointer mt-3.5"
                     onClick={togglePasswordVisibility}
