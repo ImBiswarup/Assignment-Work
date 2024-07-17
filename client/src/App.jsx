@@ -7,6 +7,7 @@ import Onboarding3 from './components/Onboarding3';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import ClockPage from './components/ClockPage';
+import LoginSuccess from './components/LoginSuccess';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/track" element={<ClockPage />} />
+          <Route path="/login-success" element={<LoginSuccess />} />
         </Routes>
       </main>
     </div>

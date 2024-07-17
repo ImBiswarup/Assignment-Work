@@ -1,59 +1,85 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 const AnalogClock = ({ speed }) => {
-    const [time, setTime] = useState(new Date());
-    const [remainingTime, setRemainingTime] = useState(7200000); // 120 minutes in milliseconds
-    const intervalRef = useRef(null);
+  const [time, setTime] = useState(new Date());
+  const [remainingTime, setRemainingTime] = useState(7200000); 
+  const intervalRef = useRef(null);
 
-    useEffect(() => {
-        clearInterval(intervalRef.current);
-        intervalRef.current = setInterval(() => {
-            setTime(prevTime => {
-                const newTime = new Date(prevTime.getTime() - 1000);
-                setRemainingTime(prevRemainingTime => prevRemainingTime - speed);
-                return newTime;
-            });
-        }, speed);
-        return () => clearInterval(intervalRef.current);
-    }, [speed]);
+  useEffect(() => {
+    clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      setTime((prevTime) => {
+        const newTime = new Date(prevTime.getTime() - 1000);
+        setRemainingTime((prevRemainingTime) => prevRemainingTime - 1000);
+        return newTime;
+      });
+    }, speed);
+    return () => clearInterval(intervalRef.current);
+  }, [speed]);
 
-    const hours = time.getHours();
-    const minutes = time.getMinutes();
-    const seconds = time.getSeconds();
+  const hours = time.getHours();
+  const minutes = time.getMinutes();
+  const seconds = time.getSeconds();
 
-    const hourStyle = {
-        transform: `rotate(-${(hours % 12) * 30 + minutes / 2}deg)`,
+  const hourStyle = {
+    transform: `rotate(-${(hours % 12) * 30 + minutes / 2}deg)`,
+  };
+  const minuteStyle = {
+    transform: `rotate(-${minutes * 6}deg)`,
+  };
+  const secondStyle = {
+    transform: `rotate(-${seconds * 6}deg)`,
+  };
+
+  const formatRemainingTime = (milliseconds) => {
+    const totalSeconds = Math.floor(milliseconds / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    return `${hours}h ${minutes}m ${seconds}s`;
+  };
+
+  const renderDigits = () => {
+    const digits = [12, 3, 6, 9];
+    const positions = {
+      12: -90,
+      3: 0,
+      6: 90,
+      9: 180,
     };
-    const minuteStyle = {
-        transform: `rotate(-${minutes * 6}deg)`,
-    };
-    const secondStyle = {
-        transform: `rotate(-${seconds * 6}deg)`,
-    };
-
-    const formatRemainingTime = (milliseconds) => {
-        const totalSeconds = Math.floor(milliseconds / 1000);
-        const hours = Math.floor(totalSeconds / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = totalSeconds % 60;
-        return `${hours}h ${minutes}m ${seconds}s`;
-    };
-
-    return (
-        <div className="flex flex-col items-center">
-            <div className="clock bg-gray-800 text-white w-72 h-72 rounded-full flex items-center justify-center relative">
-                <div className="clock-face w-full h-full rounded-full border-4 border-gray-400 flex items-center justify-center relative">
-                    <div className="hand hour w-1/12 h-1/3 bg-gray-400 absolute" style={hourStyle} />
-                    <div className="hand minute w-1/12 h-1/2 bg-gray-400 absolute" style={minuteStyle} />
-                    <div className="hand second w-1/24 h-2/3 bg-red-500 absolute" style={secondStyle} />
-                    <div className="center bg-gray-400 w-4 h-4 rounded-full absolute" />
-                </div>
-            </div>
-            <div className="mt-4 text-lg">
-                Remaining Time: {formatRemainingTime(remainingTime)}
-            </div>
+    return digits.map((digit) => {
+      const angle = positions[digit];
+      const style = {
+        transform: `rotate(${angle}deg) translate(120px) rotate(-${angle}deg)`,
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transformOrigin: 'center',
+      };
+      return (
+        <div key={digit} style={style} className="text-lg text-gray-400">
+          {digit}
         </div>
-    );
+      );
+    });
+  };
+
+  return (
+    <div className="flex flex-col items-center">
+      <div className="clock bg-gray-800 text-white w-72 h-72 rounded-full flex items-center justify-center relative">
+        <div className="clock-face w-full h-full rounded-full border-4 border-gray-400 flex items-center justify-center relative">
+          {renderDigits()}
+          <div className="hand hour w-2 h-16 bg-gray-400 absolute origin-bottom" style={hourStyle} />
+          <div className="hand minute w-1.5 h-24 bg-gray-400 absolute origin-bottom" style={minuteStyle} />
+          <div className="hand second w-1 h-28 bg-red-500 absolute origin-bottom" style={secondStyle} />
+          <div className="center bg-gray-400 w-4 h-4 rounded-full absolute" />
+        </div>
+      </div>
+      <div className="mt-4 text-lg">
+        Remaining Time: {formatRemainingTime(remainingTime)}
+      </div>
+    </div>
+  );
 };
 
 export default AnalogClock;

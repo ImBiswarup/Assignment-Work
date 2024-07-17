@@ -4,11 +4,14 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('')
+  const [password, setPassword] = useState('');
 
-  const submitForm = async () => {
+  const submitForm = async (e) => {
+    e.preventDefault();
     console.log(email, password);
+    window.location.href = "http://localhost:5173/login-success";
   }
+
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
