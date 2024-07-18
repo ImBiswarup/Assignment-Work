@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 const AnalogClock = ({ speed }) => {
   const [time, setTime] = useState(new Date());
-  const [remainingTime, setRemainingTime] = useState(7200000); 
+  const [remainingTime, setRemainingTime] = useState(7200000); // 120 minutes in milliseconds
   const intervalRef = useRef(null);
 
   useEffect(() => {
@@ -39,36 +39,10 @@ const AnalogClock = ({ speed }) => {
     return `${hours}h ${minutes}m ${seconds}s`;
   };
 
-  const renderDigits = () => {
-    const digits = [12, 3, 6, 9];
-    const positions = {
-      12: -90,
-      3: 0,
-      6: 90,
-      9: 180,
-    };
-    return digits.map((digit) => {
-      const angle = positions[digit];
-      const style = {
-        transform: `rotate(${angle}deg) translate(120px) rotate(-${angle}deg)`,
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transformOrigin: 'center',
-      };
-      return (
-        <div key={digit} style={style} className="text-lg text-gray-400">
-          {digit}
-        </div>
-      );
-    });
-  };
-
   return (
     <div className="flex flex-col items-center">
       <div className="clock bg-gray-800 text-white w-72 h-72 rounded-full flex items-center justify-center relative">
         <div className="clock-face w-full h-full rounded-full border-4 border-gray-400 flex items-center justify-center relative">
-          {renderDigits()}
           <div className="hand hour w-2 h-16 bg-gray-400 absolute origin-bottom" style={hourStyle} />
           <div className="hand minute w-1.5 h-24 bg-gray-400 absolute origin-bottom" style={minuteStyle} />
           <div className="hand second w-1 h-28 bg-red-500 absolute origin-bottom" style={secondStyle} />
