@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import axios from "axios";
 
 const Signup = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -10,8 +11,22 @@ const Signup = () => {
 
     const submitForm = async (e) => {
         e.preventDefault();
-        console.log(email, password, username, agreeToTerms);
-    }
+
+        try {
+            const response = await axios.post('http://localhost:3000/user/signup', {
+                username,
+                email,
+                password
+            });
+            if (response.data.status === 'success') {
+                window.location.href = 'http://localhost:5173/login';
+            } else {
+                console.error('Signup failed:', response.data.msg);
+            }
+        } catch (error) {
+            console.error('Error during signup:', error);
+        }
+    };
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);

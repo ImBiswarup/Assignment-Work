@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-
+import axios from 'axios';
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
@@ -8,8 +8,19 @@ const Login = () => {
 
   const submitForm = async (e) => {
     e.preventDefault();
-    console.log(email, password);
-    window.location.href = "http://localhost:5173/login-success";
+    try {
+      const response = await axios.post('http://localhost:3000/user/login', {
+        email,
+        password
+      });
+      if (response.data.status === 'success') {
+        window.location.href = 'http://localhost:5173/login-success';
+      } else {
+        console.error('Login failed:', response.data.msg);
+      }
+    } catch (error) {
+      console.error('Error during Login:', error);
+    }
   }
 
 

@@ -1,18 +1,14 @@
 const jwt = require('jsonwebtoken');
-const User = require('../model/users');
 
 const generateAuthToken = async (req, res, next) => {
     try {
-        const { user } = req; 
+        const { user } = req;
         const token = jwt.sign(
             {
                 id: user._id,
-                name: user.name,
+                name: user.username,
                 email: user.email,
-            },
-            process.env.JWT_SECRET,
-            { expiresIn: '1h' }
-        );
+            }, process.env.JWT_SECRET);
 
         user.token = token;
         await user.save();

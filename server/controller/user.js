@@ -4,10 +4,9 @@ const generateAuthToken = require('../middleware/generateToken');
 
 const signupHandler = async (req, res) => {
     try {
-        // console.log("req.body: ", req.body);
-        const { name, email, password } = req.body;
+        const { username, email, password } = req.body;
 
-        if (!name || !email || !password) {
+        if (!username || !email || !password) {
             return res.json({ msg: "Please provide a name and email to continue" })
         }
 
@@ -18,7 +17,7 @@ const signupHandler = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const newUser = new User({ name, email, password: hashedPassword });
+        const newUser = new User({ username, email, password: hashedPassword });
 
         req.user = newUser;
         await generateAuthToken(req, res, () => {
@@ -31,7 +30,6 @@ const signupHandler = async (req, res) => {
 
 const loginHandler = async (req, res) => {
     try {
-        // console.log(req.body);
         const { email, password } = req.body;
 
         const existingUser = await User.findOne({ email: email });
