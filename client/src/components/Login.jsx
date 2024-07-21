@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from 'axios';
+import { useAuth0 } from "@auth0/auth0-react";
+
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { loginWithRedirect } = useAuth0();
+  const { user, isAuthenticated, isLoading } = useAuth0();
+
+
+  console.log(user)
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -107,6 +114,7 @@ const Login = () => {
 
           <div className="flex justify-center">
             <button
+              onClick={() => loginWithRedirect()}
               type="button"
               className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
             >

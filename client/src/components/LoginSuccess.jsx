@@ -2,8 +2,12 @@ import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDrag } from 'react-use-gesture';
 import loginSuccess from "./images/login-success.jpeg";
+import { useAuth0 } from "@auth0/auth0-react";
+
 
 const LoginSuccess = () => {
+    const { logout } = useAuth0();
+
     const [position, setPosition] = useState({ y: 0 });
     const ref = useRef(null);
 
@@ -39,7 +43,9 @@ const LoginSuccess = () => {
                                 Go to Tracking Screen
                             </button>
                         </Link>
-                        <button className="w-full py-2 px-4 text-black rounded-full">Logout</button>
+                        <button
+                            onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
+                            className="w-full py-2 px-4 text-black rounded-full">Logout</button>
                     </div>
                 </div>
             </div>
