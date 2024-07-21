@@ -127,7 +127,7 @@ const Login = () => {
         <div className="text-center">
           <p className="text-gray-500">
             Don't have an account?{' '}
-            <a href="/signup" className="font-medium text-orange-600 hover:text-orange-500">
+            <a href="https://assignment-work.vercel.app/signup" className="font-medium text-orange-600 hover:text-orange-500">
               Register
             </a>
           </p>
