@@ -24,7 +24,7 @@ const Signup = () => {
                 password
             });
             if (response.data.status === 'success') {
-                window.location.href = 'http://localhost:5173/login';
+                window.location.href = 'https://assignment-work.vercel.app/login';
             } else {
                 console.error('Signup failed:', response.data.msg);
             }
@@ -161,7 +161,7 @@ const Signup = () => {
                 <div className="text-center">
                     <p className="text-gray-500">
                         Have an account?{' '}
-                        <a href="/login" className="font-medium text-orange-600 hover:text-orange-500">
+                        <a href="https://assignment-work.vercel.app/login" className="font-medium text-orange-600 hover:text-orange-500">
                             Sign In
                         </a>
                     </p>
