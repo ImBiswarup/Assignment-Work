@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     domain="biswarup-ghosh.jp.auth0.com"
     clientId="lMbcL3HhLZbGLp1PHWCYeQnAhgLSz20z"
     authorizationParams={{
-      redirect_uri: "http://localhost:5173/login-success" || "https://assignment-work.vercel.app/"
+      redirect_uri:"https://assignment-work.vercel.app/"
     }}
   >
     <BrowserRouter >

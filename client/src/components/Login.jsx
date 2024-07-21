@@ -21,7 +21,7 @@ const Login = () => {
         password
       });
       if (response.data.status === 'success') {
-        window.location.href = 'http://localhost:5173/login-success';
+        window.location.href = 'https://assignment-work.vercel.app/login-success';
       } else {
         console.error('Login failed:', response.data.msg);
       }
