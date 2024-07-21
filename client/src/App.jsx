@@ -22,12 +22,12 @@ function App() {
       <main className="flex-grow">
         <Routes>
           <Route exact path="https://assignment-work.vercel.app/" element={<Onboarding />} />
-          <Route exact path="https://assignment-work.vercel.app/onboarding2" element={<Onboarding2 />} />
-          <Route exact path="https://assignment-work.vercel.app/onboarding3" element={<Onboarding3 />} />
-          <Route exact path="https://assignment-work.vercel.app/login" element={<Login />} />
-          <Route exact path="https://assignment-work.vercel.app/signup" element={<Signup />} />
-          <Route exact path="https://assignment-work.vercel.app/track" element={<ClockPage />} />
-          <Route exact path="https://assignment-work.vercel.app/login-success" element={<LoginSuccess />} />
+          <Route exact path="/onboarding2" element={<Onboarding2 />} />
+          <Route exact path="/onboarding3" element={<Onboarding3 />} />
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/signup" element={<Signup />} />
+          <Route exact path="/track" element={<ClockPage />} />
+          <Route exact path="/login-success" element={<LoginSuccess />} />
         </Routes>
       </main>
     </div>
