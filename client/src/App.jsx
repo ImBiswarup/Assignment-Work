@@ -21,7 +21,7 @@ function App() {
     <div className="flex flex-col min-h-screen h-screen">
       <main className="flex-grow">
         <Routes>
-          <Route exact path="https://assignment-work.vercel.app/" element={<Onboarding />} />
+          <Route exact path="/" element={<Onboarding />} />
           <Route exact path="/onboarding2" element={<Onboarding2 />} />
           <Route exact path="/onboarding3" element={<Onboarding3 />} />
           <Route exact path="/login" element={<Login />} />
