@@ -21,7 +21,7 @@ function App() {
     <div className="flex flex-col min-h-screen h-screen">
       <main className="flex-grow">
         <Routes>
-          <Route path="" element={<Onboarding />} />
+          <Route path="/" element={<Onboarding />} />
           <Route path="/onboarding2" element={<Onboarding2 />} />
           <Route path="/onboarding3" element={<Onboarding3 />} />
           <Route path="/login" element={<Login />} />
