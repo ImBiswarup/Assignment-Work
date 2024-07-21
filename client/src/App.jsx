@@ -21,10 +21,10 @@ function App() {
     <div className="flex flex-col min-h-screen h-screen">
       <main className="flex-grow">
         <Routes>
-          <Route path="https://assignment-work.vercel.app/" element={<Onboarding />} />
-          <Route path="https://assignment-work-imbiswarups-projects.vercel.app/onboarding2" element={<Onboarding2 />} />
-          <Route path="https://assignment-work-imbiswarups-projects.vercel.app/onboarding2" element={<Onboarding3 />} />
-          <Route path="https://assignment-work.vercel.app/login" element={<Login />} />
+          <Route path="" element={<Onboarding />} />
+          <Route path="/onboarding2" element={<Onboarding2 />} />
+          <Route path="/onboarding3" element={<Onboarding3 />} />
+          <Route path="/login" element={<Login />} />
           <Route path="https://assignment-work.vercel.app/signup" element={<Signup />} />
           <Route path="https://assignment-work.vercel.app/login" element={<ClockPage />} />
           <Route path="/login-success" element={<LoginSuccess />} />
