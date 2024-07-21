@@ -29,7 +29,7 @@ const Signup = () => {
                 console.error('Signup failed:', response.data.msg);
             }
         } catch (error) {
-            console.error('Error during signup:', error);
+            console.error('Error during signup: ', error);
         }
     };
 
@@ -142,7 +142,7 @@ const Signup = () => {
 
                     <div className="flex items-center justify-center space-x-2">
                         <hr className="flex-grow border-gray-300" />
-                        <span className="text-gray-500">Or sign in with</span>
+                        <span className="text-gray-500">Or register with</span>
                         <hr className="flex-grow border-gray-300" />
                     </div>
 
