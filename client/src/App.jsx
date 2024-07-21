@@ -24,10 +24,10 @@ function App() {
           <Route path="/" element={<Onboarding />} />
           <Route path="/onboarding2" element={<Onboarding2 />} />
           <Route path="/onboarding3" element={<Onboarding3 />} />
-          <Route path="https://assignment-work.vercel.app/login" element={<Login />} />
-          <Route path="https://assignment-work.vercel.app/signup" element={<Signup />} />
-          <Route path="https://assignment-work.vercel.app/track" element={<ClockPage />} />
-          <Route path="https://assignment-work.vercel.app/login-success" element={<LoginSuccess />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/track" element={<ClockPage />} />
+          <Route path="/login-success" element={<LoginSuccess />} />
         </Routes>
       </main>
     </div>
