@@ -1,12 +1,10 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDrag } from 'react-use-gesture';
-import loginSuccess from "./images/login-success.jpeg";
-import { useAuth0 } from "@auth0/auth0-react";
+import loginSuccess from "./images/Illustration Success.png";
 
 
 const LoginSuccess = () => {
-    const { logout } = useAuth0();
 
     const [position, setPosition] = useState({ y: 0 });
     const ref = useRef(null);
@@ -35,7 +33,7 @@ const LoginSuccess = () => {
                 >
                     <div className="w-full h-2 bg-gray-300 rounded-full mb-4">
                     </div>
-                    <div className="text-center">
+                    <div className="text-center flex flex-col md:px-20 px-10 items-center justify-center">
                         <img src={loginSuccess} alt="" />
                         <h2 className="text-2xl font-bold mb-2">Login Successful</h2>
                         <Link to='/track'>

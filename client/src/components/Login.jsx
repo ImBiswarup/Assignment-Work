@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from 'axios';
-import { useAuth0 } from "@auth0/auth0-react";
 import { Link } from 'react-router-dom';
 
 const Login = () => {
@@ -13,7 +12,7 @@ const Login = () => {
   const submitForm = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/user/login', {
+      const response = await axios.post('https://assignment-work-server.onrender.com/api/user/login', {
         email,
         password
       });
