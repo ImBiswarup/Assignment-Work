@@ -23,7 +23,7 @@ const Signup = () => {
                 password
             });
             if (response.data.status === 'success') {
-                window.location.href = 'http://localhost:5173/login';
+                window.location.href = '/login';
             } else {
                 console.error('Signup failed:', response.data.msg);
             }

@@ -17,7 +17,7 @@ const Login = () => {
         password
       });
       if (response.data.status === 'success') {
-        window.location.href = 'http://localhost:5173/login-success';
+        window.location.href = '/login-success';
       } else {
         console.error('Login failed:', response.data.msg);
       }
