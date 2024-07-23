@@ -2,29 +2,46 @@ import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const { loginWithRedirect } = useAuth0();
+
 
   const submitForm = async (e) => {
     e.preventDefault();
+
     try {
       const response = await axios.post('https://assignment-work-server.onrender.com/api/user/login', {
         email,
         password
       });
+
       if (response.data.status === 'success') {
+        alert('Login successful! Redirecting...');
         window.location.href = '/login-success';
       } else {
+        alert('Login failed: ' + response.data.msg);
         console.error('Login failed:', response.data.msg);
       }
     } catch (error) {
-      console.error('Error during Login:', error);
+      if (error.response) {
+        alert('Error: ' + error.response.data.msg);
+        console.error('Error during login: ', error.response.data);
+      } else if (error.request) {
+        alert('Network error: Please check your internet connection.');
+        console.error('Network error during login: ', error.request);
+      } else {
+        alert('An unexpected error occurred: ' + error.message);
+        console.error('Unexpected error during login: ', error.message);
+      }
     }
-  }
+  };
+
 
 
   const togglePasswordVisibility = () => {
@@ -110,6 +127,7 @@ const Login = () => {
 
           <div className="flex justify-center">
             <button
+              onClick={() => loginWithRedirect()}
               type="button"
               className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
             >

@@ -1,10 +1,16 @@
 import React, { useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDrag } from 'react-use-gesture';
-import loginSuccess from "./images/Illustration Success.png";
+import loginSuccess from "../../public/Illustration Success.png";
+import { useAuth0 } from "@auth0/auth0-react";
+import axios from 'axios';
+
+
 
 
 const LoginSuccess = () => {
+    const { logout } = useAuth0();
+
 
     const [position, setPosition] = useState({ y: 0 });
     const ref = useRef(null);
@@ -17,12 +23,30 @@ const LoginSuccess = () => {
         return memo;
     });
 
+
+    const logoutHandler = async () => {
+        try {
+            await axios.post('https://assignment-work-server.onrender.com/api/user/logout');
+    
+            // Redirect to the login page
+            logout({ returnTo: window.location.origin  });
+
+            window.location.href = '/login';
+        } catch (error) {
+            console.error('Error during logout:', error);
+            alert('Logout failed. Please try again.');
+        }
+    };
+
+    
+
+
     return (
         <div className="h-screen flex items-center justify-center relative overflow-hidden">
             <div
                 className="absolute inset-0 bg-cover bg-center transform scale-x-[-1] z-[-1]"
                 style={{
-                    backgroundImage: `url('https://s3-alpha-sig.figma.com/img/e088/8995/13a478aa6d3cc9bebac1c6fe29b1cf35?Expires=1722211200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Ex-qdvOG4CU7LscqCsVdIQizo9lnSnv-E9rGlsYXUEdib-ekFB2UxagXNaEaDC1yyqrMSlrAmmbeQUMx-fUHSZ7gXrW6K0homEaOboDVi1tO0CIQENlaUUZA6bsLtvFLTrx0S4SSse7jd87O8MXOvGvjJk7XO22wkK3Qbdke4W7RdIDlWEhof63uRZOMw9V5qkIHUG7E2ZDc~JvGdwvAdn7UvurZa9NPw1xB20eE4pTx~gOURNif~HZ2sjYyz1Qp1uVQMTw26ynY63m8YQWQGU3nX28L2oqi7wAvKhJnnYcA2lkt5kLw~jm5RokL~SHvMqwj1530qswV3~gfM6VHyA__')`,
+                    backgroundImage: `url('https://res.cloudinary.com/djrdw0sqz/image/upload/v1721765887/13a478aa6d3cc9bebac1c6fe29b1cf35_dl5asm.png')`,
                 }}
             ></div>
             <div className="relative">
@@ -42,7 +66,7 @@ const LoginSuccess = () => {
                             </button>
                         </Link>
                         <button
-                            onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}
+                            onClick={() => logoutHandler()}
                             className="w-full py-2 px-4 text-black rounded-full">Logout</button>
                     </div>
                 </div>

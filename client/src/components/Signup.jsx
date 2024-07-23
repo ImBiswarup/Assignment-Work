@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import { Link } from 'react-router-dom';
+import { useAuth0 } from "@auth0/auth0-react";
+
 
 
 const Signup = () => {
@@ -10,6 +12,8 @@ const Signup = () => {
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [agreeToTerms, setAgreeToTerms] = useState(false);
+
+    const { loginWithRedirect } = useAuth0();
 
 
 
@@ -22,15 +26,28 @@ const Signup = () => {
                 email,
                 password
             });
+
             if (response.data.status === 'success') {
+                alert('Signup successful! Redirecting to login page...');
                 window.location.href = '/login';
             } else {
+                alert('Signup failed: ' + response.data.msg);
                 console.error('Signup failed:', response.data.msg);
             }
         } catch (error) {
-            console.error('Error during signup: ', error);
+            if (error.response) {
+                alert('Error: ' + error.response.data.msg);
+                console.error('Error during signup: ', error.response.data);
+            } else if (error.request) {
+                alert('Network error: Please check your internet connection.');
+                console.error('Network error during signup: ', error.request);
+            } else {
+                alert('An unexpected error occurred: ' + error.message);
+                console.error('Unexpected error during signup: ', error.message);
+            }
         }
     };
+
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -147,6 +164,7 @@ const Signup = () => {
 
                     <div className="flex justify-center">
                         <button
+                            onClick={() => loginWithRedirect()}
                             type="button"
                             className="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                         >
