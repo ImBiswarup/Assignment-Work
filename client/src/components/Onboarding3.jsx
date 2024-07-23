@@ -16,7 +16,7 @@ const Onboarding3 = () => {
                         <span className="block w-12 h-2 bg-white rounded-r-lg rounded-l-lg"></span>
                     </div>
                     <div className="p-1 rounded-full border-1 border-t-4 border-r-4 border-b-4 border-white">
-                        <Link to="https://assignment-work.netlify.app/login" className="bg-white text-orange-500 p-4 rounded-full shadow-lg flex items-center justify-center">
+                        <Link to="/login" className="bg-white text-orange-500 p-4 rounded-full shadow-lg flex items-center justify-center">
                             <GrLinkNext className="text-3xl" />
                         </Link>
                     </div>

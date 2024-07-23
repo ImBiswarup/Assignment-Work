@@ -159,7 +159,7 @@ const Signup = () => {
                 <div className="text-center">
                     <p className="text-gray-500">
                         Have an account?{' '}
-                        <Link to="https://assignment-work.netlify.app/login" className="font-medium text-orange-600 hover:text-orange-500">
+                        <Link to="/login" className="font-medium text-orange-600 hover:text-orange-500">
                             Sign In
                         </Link>
                     </p>
