@@ -12,7 +12,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     domain="biswarup-ghosh.jp.auth0.com"
     clientId="762lymNJpkKrznrJPE4kWs3hyPSk4ufs"
     authorizationParams={{
-      redirect_uri: "http://localhost:5173/"
+      redirect_uri: window.location.origin
     }}
   >
     <BrowserRouter >
