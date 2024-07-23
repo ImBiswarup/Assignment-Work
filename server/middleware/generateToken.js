@@ -8,7 +8,10 @@ const generateAuthToken = async (req, res, next) => {
                 id: user._id,
                 name: user.username,
                 email: user.email,
-            }, process.env.JWT_SECRET);
+            }, 
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+        );
 
         user.token = token;
         await user.save();

@@ -1,5 +1,4 @@
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const User = require('../model/users');
 const generateAuthToken = require('../middleware/generateToken');
 
@@ -8,10 +7,10 @@ const signupHandler = async (req, res) => {
         const { username, email, password } = req.body;
 
         if (!username || !email || !password) {
-            return res.json({ msg: "Please provide a name and email to continue" });
+            return res.json({ msg: "Please provide a username, email, and password to continue" });
         }
 
-        const existingUser = await User.findOne({ email: email });
+        const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.json({ msg: 'User already exists', status: 'error' });
         }
@@ -19,43 +18,35 @@ const signupHandler = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const newUser = new User({ username, email, password: hashedPassword });
-        await newUser.save();
+        req.user = newUser;
 
-        // Generate token
-        const token = jwt.sign({ userId: newUser._id }, 'your_jwt_secret', { expiresIn: '1h' });
-        newUser.token = token;
-        await newUser.save();
-
-        // Set cookie
-        res.cookie('token', token, { httpOnly: true });
-
-        return res.json({ msg: 'User created successfully', status: 'success', user: newUser });
+        await generateAuthToken(req, res, async () => {
+            // Set cookie
+            res.cookie('token', req.token, { httpOnly: true });
+            return res.json({ msg: 'User created successfully', status: 'success', user: newUser });
+        });
     } catch (error) {
         return res.json({ msg: "Signup failed", error: error.message });
     }
 };
 
-
 const loginHandler = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        const existingUser = await User.findOne({ email: email });
+        const existingUser = await User.findOne({ email });
         if (!existingUser) {
             return res.json({ msg: 'User not found', status: 'error' });
         }
 
         const isPasswordValid = await bcrypt.compare(password, existingUser.password);
         if (isPasswordValid) {
-            // Generate token
-            const token = jwt.sign({ userId: existingUser._id }, 'your_jwt_secret', { expiresIn: '1h' });
-            existingUser.token = token;
-            await existingUser.save();
-
-            // Set cookie
-            res.cookie('token', token, { httpOnly: true });
-
-            return res.json({ msg: "Login successful", status: 'success', user: existingUser });
+            req.user = existingUser;
+            await generateAuthToken(req, res, async () => {
+                // Set cookie
+                res.cookie('token', req.token, { httpOnly: true });
+                return res.json({ msg: "Login successful", status: 'success', user: existingUser });
+            });
         } else {
             return res.json({ msg: 'Invalid credentials', status: 'error' });
         }
@@ -64,14 +55,15 @@ const loginHandler = async (req, res) => {
     }
 };
 
-
 const logoutHandler = async (req, res) => {
     try {
         const { token } = req.cookies;
 
+        // Find the user by token and clear the token in the database
         const user = await User.findOneAndUpdate({ token }, { token: null });
 
         if (user) {
+            // Clear the cookie
             res.clearCookie('token');
             return res.json({ msg: "Logout successful", status: 'success' });
         } else {
