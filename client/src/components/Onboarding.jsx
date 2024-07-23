@@ -14,10 +14,10 @@ const Onboarding = () => {
                     <span className="block w-8 h-2 bg-white opacity-50 rounded-r-lg rounded-l-lg"></span>
                 </div>
                 <div className="flex justify-between w-full px-4">
-                    <Link to='/login'>
+                    <Link to='https://assignment-work.netlify.app/login'>
                         <button className="bg-transparent text-white px-4 py-2 rounded-md">Skip</button>
                     </Link>
-                    <Link to='/onboarding2'>
+                    <Link to='https://assignment-work.netlify.app/onboarding2'>
                         <button className="text-white px-4 py-2 rounded-md flex items-center">Next <GrLinkNext className="ml-2" /></button>
                     </Link>
                 </div>
