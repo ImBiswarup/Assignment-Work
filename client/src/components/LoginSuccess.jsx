@@ -4,12 +4,16 @@ import { useDrag } from 'react-use-gesture';
 import loginSuccess from "../../public/Illustration Success.png";
 import { useAuth0 } from "@auth0/auth0-react";
 import axios from 'axios';
+import { useCookies } from 'react-cookie';
+
 
 
 
 
 const LoginSuccess = () => {
     const { logout } = useAuth0();
+    const [cookies, setCookie, removeCookie] = useCookies(['token']);
+
 
 
     const [position, setPosition] = useState({ y: 0 });
@@ -24,12 +28,12 @@ const LoginSuccess = () => {
     });
 
 
+
     const logoutHandler = async () => {
         try {
             await axios.post('https://assignment-work-server.onrender.com/api/user/logout');
-    
-            // Redirect to the login page
-            logout({ returnTo: window.location.origin  });
+
+            removeCookie('token', { path: '/' });
 
             window.location.href = '/login';
         } catch (error) {
@@ -38,7 +42,9 @@ const LoginSuccess = () => {
         }
     };
 
-    
+
+
+
 
 
     return (

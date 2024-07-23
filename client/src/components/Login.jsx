@@ -3,11 +3,14 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
+import { useCookies } from 'react-cookie';
+
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [cookies, setCookie] = useCookies(['token']);
 
   const { loginWithRedirect } = useAuth0();
 
@@ -16,31 +19,32 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('https://assignment-work-server.onrender.com/api/user/login', {
-        email,
-        password
-      });
+        const response = await axios.post('https://assignment-work-server.onrender.com/api/user/login', {
+            email,
+            password
+        });
 
-      if (response.data.status === 'success') {
-        alert('Login successful! Redirecting...');
-        window.location.href = '/login-success';
-      } else {
-        alert('Login failed: ' + response.data.msg);
-        console.error('Login failed:', response.data.msg);
-      }
+        if (response.data.status === 'success') {
+            alert('Login successful! Redirecting...');
+            setCookie('token', response.data.user.token, { path: '/' });
+            window.location.href = '/login-success';
+        } else {
+            alert('Login failed: ' + response.data.msg);
+            console.error('Login failed:', response.data.msg);
+        }
     } catch (error) {
-      if (error.response) {
-        alert('Error: ' + error.response.data.msg);
-        console.error('Error during login: ', error.response.data);
-      } else if (error.request) {
-        alert('Network error: Please check your internet connection.');
-        console.error('Network error during login: ', error.request);
-      } else {
-        alert('An unexpected error occurred: ' + error.message);
-        console.error('Unexpected error during login: ', error.message);
-      }
+        if (error.response) {
+            alert('Error: ' + error.response.data.msg);
+            console.error('Error during login: ', error.response.data);
+        } else if (error.request) {
+            alert('Network error: Please check your internet connection.');
+            console.error('Network error during login: ', error.request);
+        } else {
+            alert('An unexpected error occurred: ' + error.message);
+            console.error('Unexpected error during login: ', error.message);
+        }
     }
-  };
+};
 
 
 

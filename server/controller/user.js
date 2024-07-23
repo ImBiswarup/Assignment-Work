@@ -21,9 +21,8 @@ const signupHandler = async (req, res) => {
         req.user = newUser;
 
         await generateAuthToken(req, res, async () => {
-            // Set cookie
             res.cookie('token', req.token, { httpOnly: true });
-            return res.json({ msg: 'User created successfully', status: 'success', user: newUser });
+            return res.json({ msg: 'User created successfully', status: 'success', user: newUser, token: req.token });
         });
     } catch (error) {
         return res.json({ msg: "Signup failed", error: error.message });
@@ -43,9 +42,8 @@ const loginHandler = async (req, res) => {
         if (isPasswordValid) {
             req.user = existingUser;
             await generateAuthToken(req, res, async () => {
-                // Set cookie
                 res.cookie('token', req.token, { httpOnly: true });
-                return res.json({ msg: "Login successful", status: 'success', user: existingUser });
+                return res.json({ msg: "Login successful", status: 'success', user: existingUser, token: req.token });
             });
         } else {
             return res.json({ msg: 'Invalid credentials', status: 'error' });
@@ -59,11 +57,9 @@ const logoutHandler = async (req, res) => {
     try {
         const { token } = req.cookies;
 
-        // Find the user by token and clear the token in the database
         const user = await User.findOneAndUpdate({ token }, { token: null });
 
         if (user) {
-            // Clear the cookie
             res.clearCookie('token');
             return res.json({ msg: "Logout successful", status: 'success' });
         } else {

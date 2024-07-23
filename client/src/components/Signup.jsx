@@ -3,6 +3,8 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 import { Link } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
+import { useCookies } from 'react-cookie';
+
 
 
 
@@ -12,6 +14,7 @@ const Signup = () => {
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [agreeToTerms, setAgreeToTerms] = useState(false);
+    const [cookies, setCookie] = useCookies(['token']);
 
     const { loginWithRedirect } = useAuth0();
 
@@ -27,8 +30,11 @@ const Signup = () => {
                 password
             });
 
+            console.log(response.data);
+
             if (response.data.status === 'success') {
                 alert('Signup successful! Redirecting to login page...');
+                setCookie('token', response.data.user.token, { path: '/' });
                 window.location.href = '/login';
             } else {
                 alert('Signup failed: ' + response.data.msg);
