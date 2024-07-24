@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { TimeContext } from '../context/TimeProvider';
 
-const ShareButton = ({ generateShareUrl }) => {
+const ShareButton = () => {
+  const { generateShareUrl } = useContext(TimeContext);
+
   return (
-    <button
-      onClick={generateShareUrl}
-      className="share-button bg-blue-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-700 transition duration-300"
-    >
-      Share
+    <button onClick={generateShareUrl} className="mt-4 px-4 py-2 bg-orange-500 text-white rounded">
+      Share URL
     </button>
   );
 };

@@ -1,34 +1,35 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
+import { TimeContext } from '../context/TimeProvider';
 
-const AnalogClock = ({ speed }) => {
-  const [time, setTime] = useState(new Date());
-  const [remainingTime, setRemainingTime] = useState(7200000); // 120 minutes in milliseconds
+const AnalogClock = () => {
+  const { speed, remainingTime, setRemainingTime } = useContext(TimeContext);
+  const [time, setTime] = useState(new Date(Date.now() + remainingTime));
   const intervalRef = useRef(null);
 
   useEffect(() => {
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
       setTime((prevTime) => {
-        const newTime = new Date(prevTime.getTime() - 1000);
+        const newTime = new Date(prevTime.getTime() + 1000); 
         setRemainingTime((prevRemainingTime) => prevRemainingTime - 1000);
         return newTime;
       });
     }, speed);
     return () => clearInterval(intervalRef.current);
-  }, [speed]);
+  }, [speed, setRemainingTime]);
 
   const hours = time.getHours();
   const minutes = time.getMinutes();
   const seconds = time.getSeconds();
 
   const hourStyle = {
-    transform: `rotate(-${(hours % 12) * 30 + minutes / 2}deg)`,
+    transform: `rotate(${(hours % 12) * 30 + minutes / 2}deg)`, 
   };
   const minuteStyle = {
-    transform: `rotate(-${minutes * 6}deg)`,
+    transform: `rotate(${minutes * 6}deg)`, 
   };
   const secondStyle = {
-    transform: `rotate(-${seconds * 6}deg)`,
+    transform: `rotate(${seconds * 6}deg)`, 
   };
 
   const formatRemainingTime = (milliseconds) => {
@@ -41,8 +42,8 @@ const AnalogClock = ({ speed }) => {
 
   return (
     <div className="flex flex-col items-center">
-      <div className="clock bg-gray-800 text-white w-72 h-72 rounded-full flex items-center justify-center relative">
-        <div className="clock-face w-full h-full rounded-full border-4 border-gray-400 flex items-center justify-center relative">
+      <div className="clock bg-gray-900 text-white w-72 h-72 rounded-full flex items-center justify-center relative">
+        <div className="clock-face w-full h-full rounded-full border-4 text-white border-gray-400 flex items-center justify-center relative">
           <div className="hand hour w-2 h-16 bg-gray-400 absolute origin-bottom" style={hourStyle} />
           <div className="hand minute w-1.5 h-24 bg-gray-400 absolute origin-bottom" style={minuteStyle} />
           <div className="hand second w-1 h-28 bg-red-500 absolute origin-bottom" style={secondStyle} />
