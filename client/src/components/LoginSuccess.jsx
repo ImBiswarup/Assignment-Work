@@ -12,7 +12,7 @@ import { useCookies } from 'react-cookie';
 
 const LoginSuccess = () => {
     const { logout } = useAuth0();
-    const [cookies, setCookie, removeCookie] = useCookies(['token']);
+    const [removeCookie] = useCookies(['token']);
 
 
 
@@ -35,7 +35,7 @@ const LoginSuccess = () => {
 
             removeCookie('token', { path: '/' });
 
-            window.location.href = '/login';
+            logout({ returnTo: window.location.origin });
         } catch (error) {
             console.error('Error during logout:', error);
             alert('Logout failed. Please try again.');
