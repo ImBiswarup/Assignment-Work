@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
 import { TimeContext } from '../context/TimeProvider';
+import axios from 'axios';
+
 
 const AnalogClock = () => {
+  const [quotes, setQuotes] = useState('')
   const { speed, remainingTime, setRemainingTime } = useContext(TimeContext);
   const [time, setTime] = useState(new Date(Date.now() + remainingTime));
   const intervalRef = useRef(null);
@@ -10,7 +13,7 @@ const AnalogClock = () => {
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
       setTime((prevTime) => {
-        const newTime = new Date(prevTime.getTime() + 1000); 
+        const newTime = new Date(prevTime.getTime() + 1000);
         setRemainingTime((prevRemainingTime) => prevRemainingTime - 1000);
         return newTime;
       });
@@ -23,13 +26,13 @@ const AnalogClock = () => {
   const seconds = time.getSeconds();
 
   const hourStyle = {
-    transform: `rotate(${(hours % 12) * 30 + minutes / 2}deg)`, 
+    transform: `rotate(${(hours % 12) * 30 + minutes / 2}deg)`,
   };
   const minuteStyle = {
-    transform: `rotate(${minutes * 6}deg)`, 
+    transform: `rotate(${minutes * 6}deg)`,
   };
   const secondStyle = {
-    transform: `rotate(${seconds * 6}deg)`, 
+    transform: `rotate(${seconds * 6}deg)`,
   };
 
   const formatRemainingTime = (milliseconds) => {
