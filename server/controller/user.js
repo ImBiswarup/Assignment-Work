@@ -70,4 +70,5 @@ const logoutHandler = async (req, res) => {
     }
 };
 
+
 module.exports = { signupHandler, loginHandler, logoutHandler };

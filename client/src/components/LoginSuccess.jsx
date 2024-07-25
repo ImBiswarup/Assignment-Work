@@ -12,7 +12,7 @@ import { useCookies } from 'react-cookie';
 
 const LoginSuccess = () => {
     const { logout } = useAuth0();
-    const [removeCookie] = useCookies(['token']);
+    const [cookies, setCookie, removeCookie] = useCookies(['token']);
 
 
 
@@ -32,19 +32,15 @@ const LoginSuccess = () => {
     const logoutHandler = async () => {
         try {
             await axios.post('https://assignment-work-server.onrender.com/api/user/logout');
-
+    
             removeCookie('token', { path: '/' });
-
+    
             logout({ returnTo: window.location.origin });
         } catch (error) {
             console.error('Error during logout:', error);
             alert('Logout failed. Please try again.');
         }
     };
-
-
-
-
 
 
     return (
@@ -73,7 +69,9 @@ const LoginSuccess = () => {
                         </Link>
                         <button
                             onClick={() => logoutHandler()}
-                            className="w-full py-2 px-4 text-black rounded-full">Logout</button>
+                            className="w-full py-2 px-4 text-black rounded-full">
+                            Logout
+                        </button>
                     </div>
                 </div>
             </div>
